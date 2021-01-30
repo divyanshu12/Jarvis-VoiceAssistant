@@ -1,74 +1,34 @@
-from __future__ import print_function
-import datetime
-import pickle
-import os.path
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-import speech_recognition as sr
-from gtts import gTTS
-import playsound
-
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-
-def speak(text):
-    tts = gTTS(text= text, lang='en')
-    filename = "voice.mp3"
-    tts.save(filename)
-    playsound.playsound(filename)
+from subprocessFile import note
+from calanderFile import get_date, authenticate_google, get_calendar_event
+from voiceCommand import get_audio, speak_gtts, speak_pyttx
 
 
-def get_audio():
-    r = sr.Recognizer()
-    with sr.Microphone() as source:
-        audio = r.listen(source)
-        said = ""
-
-        try:
-            said = r.recognize_google(audio)
-            print(said)
-        except Exception as e:
-            print("Error : " + str(e))
-    
-    return said
-
-
-
-def authenticate_google():
-    creds = None
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
-
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-
-    service = build('calendar', 'v3', credentials=creds)
-    return service
-
-
-def get_calendar_event(n, service):
-    now = datetime.datetime.utcnow().isoformat() + 'Z' 
-    print(f'Getting the upcoming {n} events')
-    events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=n, singleEvents=True,
-                                        orderBy='startTime').execute()
-    events = events_result.get('items', [])
-
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
-
-
+wakeup = "Hey buddy"
 service = authenticate_google()
-get_calendar_event(2, service)
+print("Start......")
+
+while True:
+    print("Listening")
+    text = get_audio()
+    if text.count(wakeup) > 0:
+        speak_pyttx("hi, how can i help you ?")
+        text = get_audio()
+        print("You : ", text)
+
+        CALENDAR_STRS = ["what do i have", "do i have plans", "am i busy"]
+        for phrase in CALENDAR_STRS:
+            if phrase in text:
+                date = get_date(text)
+                if date:
+                    get_calendar_event(date, service)
+                else:
+                    speak_pyttx("Please try again")
+
+        NOTE_STRS = ["make a note", "write this down",
+                      "type this", "create note"]
+        for phrase in NOTE_STRS:
+            if phrase in text:
+                speak_pyttx("What would you like me to write down? ")
+                write_down = get_audio()
+                note(write_down)
+                speak_pyttx("I've made a note of that.")

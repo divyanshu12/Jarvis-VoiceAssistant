@@ -3,5 +3,5 @@
 Modules Needed
 - PyAudio
 - SpeechRecognition
-- gTTS
+- gTTS/pyttsx3
 - playsound
