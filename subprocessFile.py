@@ -4,7 +4,7 @@ import datetime
 
 def note(text):
     date = datetime.datetime.now()
-    file_name = "data/"+str(date).replace(":", "-") + "-note.txt"
+    file_name = "data/Note_"+str(date).replace(":", "-") + ".txt"
     with open(file_name, "w") as f:
         f.write(text)
 
