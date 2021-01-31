@@ -1,10 +1,12 @@
 # Voice-Assistant
 
-Modules Needed
-- PyAudio
-- SpeechRecognition
-- gTTS/pyttsx3
-- playsound
+# Dependies
+- pip install PyAudio
+- pip install SpeechRecognition
+- pip install gTTS
+- pip install pyttsx3
+- pip install playsound
+- pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
 
 
 # How does it work!!
