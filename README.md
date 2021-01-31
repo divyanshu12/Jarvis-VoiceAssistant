@@ -1,5 +1,5 @@
 # Voice-Assistant
-JARVIS voice assistant by Divyanshu Agarwal
+JARVIS, a voice assistant by Divyanshu Agarwal
 
 
 # Dependies
