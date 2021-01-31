@@ -10,11 +10,13 @@ def speak_gtts(text):
     tts.save(filename)
     playsound.playsound(filename)
 
-
 def speak_pyttx(text):
     engine = pyttsx3.init()
     engine.say(text)
     engine.runAndWait()
+
+def speak(text):
+    speak_pyttx(text)
 
 
 def get_audio():
@@ -25,6 +27,6 @@ def get_audio():
         try:
             said = r.recognize_google(audio)
             print(said)
-        except Exception as e:
-            print("Error : " + str(e))
+        except:
+            pass
     return said.lower()

@@ -1,5 +1,5 @@
 from __future__ import print_function
-from voiceCommand import speak_gtts, speak_pyttx
+from voiceCommand import speak
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -50,25 +50,25 @@ def get_calendar_event(day, service):
     events = events_result.get('items', [])
 
     if not events:
-        speak_pyttx('No upcoming events found.')
+        speak('No upcoming events found.')
     else:
-        speak_pyttx(f"You have {len(events)} events on this day.")
+        speak(f"You have {len(events)} events on this day.")
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
             print(start, event['summary'])
             time = str(start.split("T")[1].split("+")[0]).split(':')
             if int(time[0]) < 12:
                 if int(time[1]) > 0:
-                    speak_pyttx(event['summary'] + "at" +
+                    speak(event['summary'] + "at" +
                                 str(time[0]) + str(time[1])+ "am")
                 else:
-                    speak_pyttx(event['summary'] + "at" + str(time[0])+ "am")
+                    speak(event['summary'] + "at" + str(time[0])+ "am")
             else:
                 if int(time[1]) > 0:
-                    speak_pyttx(event['summary'] + "at" +
+                    speak(event['summary'] + "at" +
                                 str(int(time[0])-12) + str(time[1])+ "pm")
                 else:
-                    speak_pyttx(event['summary'] + "at" + str(int(time[0])-12)+ "pm")
+                    speak(event['summary'] + "at" + str(int(time[0])-12)+ "pm")
 
 
 def get_date(text):
