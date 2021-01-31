@@ -11,22 +11,22 @@ def speak_gtts(text):
     playsound.playsound(filename)
 
 def speak_pyttx(text):
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
+    tts = pyttsx3.init()
+    tts.say(text)
+    tts.runAndWait()
 
 def speak(text):
     speak_pyttx(text)
 
 
 def get_audio():
-    r = sr.Recognizer()
+    recog = sr.Recognizer()
     with sr.Microphone() as source:
-        audio = r.listen(source)
-        said = ""
+        audio = recog.listen(source)
+        text_listened = ""
         try:
-            said = r.recognize_google(audio)
-            print(said)
+            text_listened = recog.recognize_google(audio)
+            print(text_listened)
         except:
             pass
-    return said.lower()
+    return text_listened.lower()
