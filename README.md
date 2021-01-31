@@ -10,8 +10,10 @@
 
 
 # How does it work!!
-- It can check your google calander and tells you about events. command :- "What we have at next friday", "Am i busy today", "do i have plans on july 8th", etc
-- It can write a note and save it as notepad in data folder. command :- "Write a note", "write this down", etc
+- Help command :- "help me", "please help", "how can you help me".
+- Greetings command :- "Good morning", "how are you"
+- Google Calander events command :- "What we have at next friday", "Am i busy today", "do i have plans on july 8th", etc
+- Make Note command :- "Write a note", "write this down", etc
 
 
 # Changes you can do
