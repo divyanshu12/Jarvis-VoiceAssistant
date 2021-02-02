@@ -10,10 +10,14 @@ def speak_gtts(text):
     tts.save(filename)
     playsound.playsound(filename)
 
+# 0 - Male voice
+# 1 - Female voice
 def speak_pyttx(text):
-    tts = pyttsx3.init()
-    tts.say(text)
-    tts.runAndWait()
+    engine = pyttsx3.init('sapi5')
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[1].id)
+    engine.say(text)
+    engine.runAndWait()
 
 def speak(text):
     speak_pyttx(text)
@@ -22,10 +26,11 @@ def speak(text):
 def get_audio():
     recog = sr.Recognizer()
     with sr.Microphone() as source:
+        recog.pause_threshold = 1
         audio = recog.listen(source)
         text_listened = ""
         try:
-            text_listened = recog.recognize_google(audio)
+            text_listened = recog.recognize_google(audio, language ='en-in')
             print(text_listened)
         except:
             pass
