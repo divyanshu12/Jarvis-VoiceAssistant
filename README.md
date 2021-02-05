@@ -8,7 +8,9 @@ JARVIS, a voice assistant by Divyanshu Agarwal
 - pip install gTTS
 - pip install pyttsx3
 - pip install playsound
+- pip install wikipedia
 - pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
 
 
 # Assistant command guide

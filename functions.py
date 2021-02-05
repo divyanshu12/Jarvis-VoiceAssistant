@@ -24,5 +24,5 @@ def user_name():
     speak("Welcome Mister")
     speak(uname)
     print("Welcome Mr." + uname)
-    speak("How can i Help you, Sir")
+    speak("How can i Help you?")
  
